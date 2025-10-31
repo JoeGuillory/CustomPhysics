@@ -9,6 +9,8 @@ void PhysObject::TickPhys(float Delta)
 	Velocity += Acceleration * Delta;
 	Position += Velocity * Delta;
 	Acceleration = { 0,0 };
+
+
 }
 
 void PhysObject::AddForce(glm::vec2 Force)
@@ -45,10 +47,10 @@ void PhysObject::Draw() const
 		DrawPixel(Position.x, Position.y, RED);
 		break;
 	case ShapeType::CIRCLE:
-
+		DrawCircle(Position.x, Position.y, Collider.CircleData.Radius, RED);
 		break;
 	case ShapeType::AABB:
-
+		DrawRectangle(Collider.AABBData.x, Collider.AABBData.y, Collider.AABBData.width, Collider.AABBData.height, RED);
 		break;
 	default:
 		break;
