@@ -1,7 +1,6 @@
 #pragma once
 #include <vector>
 #include <memory>
-#include "glm/vec2.hpp"
 #include <unordered_map>
 class PhysObject;
 

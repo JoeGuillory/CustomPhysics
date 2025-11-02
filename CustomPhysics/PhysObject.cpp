@@ -50,7 +50,7 @@ void PhysObject::Draw() const
 		DrawCircle(Position.x, Position.y, Collider.CircleData.Radius, RED);
 		break;
 	case ShapeType::AABB:
-		DrawRectangle(Collider.AABBData.x, Collider.AABBData.y, Collider.AABBData.width, Collider.AABBData.height, RED);
+		DrawRectangle(Position.x + Collider.AABBData.x, Position.y + Collider.AABBData.y, Collider.AABBData.width, Collider.AABBData.height, RED);
 		break;
 	default:
 		break;

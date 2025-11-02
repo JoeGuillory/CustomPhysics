@@ -7,7 +7,7 @@
 using CollisionFunc = bool(*)(const glm::vec2&, const Shape&, const glm::vec2&, const Shape&);
 using CollisionMap = std::unordered_map<ShapeType, CollisionFunc>;
 CollisionMap map;
-World::World() : AccumulatedFixedTime(0), TargetFixedStep(1.0f / 30.0f), bUseGravity(true), GravityScale(.5)
+World::World() : AccumulatedFixedTime(0), TargetFixedStep(1.0f / 30.0f), bUseGravity(true), GravityScale(1)
 {
    
     
@@ -31,22 +31,30 @@ void World::Init()
     std::shared_ptr<PhysObject> Object1 = std::make_shared<PhysObject>();
     std::shared_ptr<PhysObject> Object2 = std::make_shared<PhysObject>();
     std::shared_ptr<PhysObject> Object3 = std::make_shared<PhysObject>();
+    std::shared_ptr<PhysObject> Object4 = std::make_shared<PhysObject>();
     
     Object1->Position = { 10,5 };
     Object2->Position = { 20,4 };
     Object3->Position = { 30,9 };
+    Object4->Position = { 0,100 };
     Object1->Collider.Type = ShapeType::CIRCLE;
     Object2->Collider.Type = ShapeType::CIRCLE;
     Object3->Collider.Type = ShapeType::CIRCLE;
-
+    Object4->Collider.Type = ShapeType::AABB;
+    Object4->Collider.AABBData.height = 10;
+    Object4->Collider.AABBData.width = 1000;
+    Object4->Collider.AABBData.y = 0;
+    Object4->Collider.AABBData.x = 0;
     Object1->Collider.CircleData.Radius = 5;
     Object2->Collider.CircleData.Radius = 10;
     Object3->Collider.CircleData.Radius = 10;
     Object1->AddForce({ 20,0 });
     Object2->AddForce({ 20,0 });
+    Object4->bUseGravity = false;
     Instantiate(Object1);
     Instantiate(Object2);
     Instantiate(Object3);
+    Instantiate(Object4);
 
 
     SetTargetFPS(60);
@@ -69,7 +77,7 @@ void World::FixedTick()
         // gravity, if applicable
         if (bUseGravity && i->bUseGravity)
         {
-            i->AddAccel(glm::vec2{ 0, 9.81f } *GravityScale);
+            i->AddAccel(glm::vec2{ 0, 9.81f } * GravityScale);
         }
 
         // integrate velocity into position
