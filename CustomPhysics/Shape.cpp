@@ -1,5 +1,6 @@
 #include "Shape.h"
 #include <cmath>
+#include "glm/glm.hpp"
 bool CheckCircleCircle(const glm::vec2& PosA, const Circle& CircleA, const glm::vec2& PosB, const Circle& CircleB)
 {
     
@@ -45,6 +46,25 @@ bool CheckAABBAABB(const glm::vec2& PosA, const AABB& BoxA, const glm::vec2& Pos
     }
     return false;
 
+}
+
+glm::vec2 DepenetrateCircleCircle(const glm::vec2& PosA, const Circle& CircleA, const glm::vec2& PosB, const Circle& CircleB, float& Pen)
+{
+    // get the distance between the two circles
+    float Dist = glm::length(PosB - PosA);
+    // add up the sum of the two radii
+    float Radii = CircleA.Radius + CircleB.Radius;
+
+    // find the difference and write it to the referenced variable
+    Pen = Radii - Dist;
+
+    // return the direction to correct along
+    return glm::normalize(PosB - PosA);
+}
+
+glm::vec2 DepenetrateCircleCircle(const glm::vec2& PosA, const Shape& ShapeA, const glm::vec2& PosB, const Shape& ShapeB, float& Pen)
+{
+    return DepenetrateCircleCircle(PosA, ShapeA.CircleData, PosB, ShapeB.CircleData, Pen);
 }
 
 bool CheckAABBAABB(const glm::vec2& PosA, const Shape& ShapeA, const glm::vec2& PosB, const Shape& ShapeB)

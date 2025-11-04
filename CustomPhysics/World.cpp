@@ -6,7 +6,10 @@
 
 using CollisionFunc = bool(*)(const glm::vec2&, const Shape&, const glm::vec2&, const Shape&);
 using CollisionMap = std::unordered_map<ShapeType, CollisionFunc>;
+using DepenetrationFunc = glm::vec2(*)(const glm::vec2& PosA, const Shape& ShapeA, const glm::vec2& PosB, const Shape& ShapeB, float& Pen);
+using DepenetrationMap = std::unordered_map <ShapeType, DepenetrationFunc>;
 CollisionMap map;
+DepenetrationMap DepenMap;
 World::World() : AccumulatedFixedTime(0), TargetFixedStep(1.0f / 30.0f), bUseGravity(true), GravityScale(1)
 {
    
@@ -20,6 +23,8 @@ void World::Init()
     map[ShapeType::CIRCLE | ShapeType::CIRCLE] = CheckCircleCircle;
     map[ShapeType::CIRCLE | ShapeType::AABB] = CheckCircleAABB;
     map[ShapeType::AABB | ShapeType::AABB] = CheckAABBAABB;
+
+    DepenMap[ShapeType::CIRCLE | ShapeType::CIRCLE] = DepenetrateCircleCircle;
 
 
     const int screenWidth = 800;
