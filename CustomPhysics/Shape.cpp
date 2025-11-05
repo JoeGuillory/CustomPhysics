@@ -4,8 +4,9 @@
 bool CheckCircleCircle(const glm::vec2& PosA, const Circle& CircleA, const glm::vec2& PosB, const Circle& CircleB)
 {
     
-    float distance = std::sqrt((PosA.x * PosB.x) + (PosA.y * PosB.y));
-
+    float distX = PosA.x - PosB.x;
+    float distY = PosA.y - PosB.y;
+    float distance = sqrt((distX * distX) + (distY * distY));
     if (distance <= CircleA.Radius + CircleB.Radius)
     {
         return true;
@@ -18,13 +19,15 @@ bool CheckCircleAABB(const glm::vec2& PosA, const Circle& Circle, const glm::vec
     float testX = PosA.x;
     float testY = PosA.y;
 
-    if (PosA.x < Box.x) testX = Box.x;
-    else if (PosA.x > PosB.x + Box.width) testX = PosB.x + Box.width;
+    if (PosA.x < PosB.x + Box.x) testX = PosB.x + Box.x;
+    else if (PosA.x > PosB.x + Box.x + Box.width) testX = PosB.x + Box.x + Box.width;
 
-    if (PosA.y < Box.y) testY = Box.y;
-    else if (PosA.y > PosB.y + Box.height) testY = PosB.x + Box.height;
+    if (PosA.y < PosB.y + Box.y) testY = PosB.y + Box.y;
+    else if (PosA.y > PosB.y + Box.y + Box.height) testY = PosB.x + Box.y + Box.height;
 
-    float distance = std::sqrt((PosA.x * testX) + (PosA.y * testY));
+    float distX = PosA.x - testX;
+    float distY = PosA.y - testY;
+    float distance = sqrt((distX * distX) + (distY * distY));
 
     if (distance <= Circle.Radius)
     {

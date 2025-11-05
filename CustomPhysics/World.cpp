@@ -10,7 +10,7 @@ using DepenetrationFunc = glm::vec2(*)(const glm::vec2& PosA, const Shape& Shape
 using DepenetrationMap = std::unordered_map <ShapeType, DepenetrationFunc>;
 CollisionMap map;
 DepenetrationMap DepenMap;
-World::World() : AccumulatedFixedTime(0), TargetFixedStep(1.0f / 30.0f), bUseGravity(true), GravityScale(1)
+World::World() : AccumulatedFixedTime(0), TargetFixedStep(1.0f / 30.0f), bUseGravity(true), GravityScale(.5)
 {
    
     
@@ -35,31 +35,23 @@ void World::Init()
     
     std::shared_ptr<PhysObject> Object1 = std::make_shared<PhysObject>();
     std::shared_ptr<PhysObject> Object2 = std::make_shared<PhysObject>();
-    std::shared_ptr<PhysObject> Object3 = std::make_shared<PhysObject>();
-    std::shared_ptr<PhysObject> Object4 = std::make_shared<PhysObject>();
-    
-    Object1->Position = { 10,5 };
-    Object2->Position = { 20,4 };
-    Object3->Position = { 30,9 };
-    Object4->Position = { 0,100 };
+   
     Object1->Collider.Type = ShapeType::CIRCLE;
-    Object2->Collider.Type = ShapeType::CIRCLE;
-    Object3->Collider.Type = ShapeType::CIRCLE;
-    Object4->Collider.Type = ShapeType::AABB;
-    Object4->Collider.AABBData.height = 10;
-    Object4->Collider.AABBData.width = 1000;
-    Object4->Collider.AABBData.y = 0;
-    Object4->Collider.AABBData.x = 0;
-    Object1->Collider.CircleData.Radius = 5;
-    Object2->Collider.CircleData.Radius = 10;
-    Object3->Collider.CircleData.Radius = 10;
-    Object1->AddForce({ 20,0 });
-    Object2->AddForce({ 20,0 });
-    Object4->bUseGravity = false;
+    Object1->Collider.CircleData.Radius = 6.0f;
+    Object1->Position = { 10,10 };
+   Object1->AddForce({ 500,0 });
+
+    Object2->Collider.Type = ShapeType::AABB;
+    Object2->Collider.AABBData.height = 10;
+    Object2->Collider.AABBData.width = 10;
+    Object2->Collider.AABBData.x = 0;
+    Object2->Collider.AABBData.y = 0;
+    Object2->Position = { 40,10 };
+
+    
     Instantiate(Object1);
     Instantiate(Object2);
-    Instantiate(Object3);
-    Instantiate(Object4);
+ 
 
 
     SetTargetFPS(60);
@@ -109,7 +101,12 @@ void World::FixedTick()
 
             if (collisionResult)
             {
-                std::cout << "there was a hit" << std::endl;
+                std::cout << "Collision Works" << std::endl;
+               /* float Pen = 0.0f;
+                glm::vec2 Normal = DepenMap[result](i->Position, i->Collider,
+                    j->Position, j->Collider, Pen);
+
+                ResolvePhysObjects(*i,*j,1.0f,Normal,Pen);*/
             }
         }
     }
