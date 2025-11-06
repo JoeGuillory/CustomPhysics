@@ -41,4 +41,9 @@ bool CheckCircleAABB(const glm::vec2& PosA, const Circle& Circle, const glm::vec
 bool CheckAABBAABB(const glm::vec2& PosA,const AABB& BoxA, const glm::vec2& PosB, const AABB& BoxB);
 
 glm::vec2 DepenetrateCircleCircle(const glm::vec2& PosA, const Circle& CircleA, const glm::vec2& PosB, const Circle& CircleB, float& Pen);
+glm::vec2 DepenetrateCircleAABB(const glm::vec2& PosA, const Circle& Circle, const glm::vec2& PosB, const AABB& Box, float& Pen);
+glm::vec2 DepenetrateAABBAABB(const glm::vec2& PosA, const AABB& BoxA, const glm::vec2& PosB, const AABB& BoxB, float& Pen);
+
 glm::vec2 DepenetrateCircleCircle(const glm::vec2& PosA, const Shape& CircleA, const glm::vec2& PosB, const Shape& CircleB, float& Pen);
+glm::vec2 DepenetrateCircleAABB(const glm::vec2& PosA, const Shape& ShapeA, const glm::vec2& PosB, const Shape& ShapeB, float& Pen);
+glm::vec2 DepenetrateAABBAABB(const glm::vec2& PosA, const Shape& ShapeA, const glm::vec2& PosB, const Shape& ShapeB, float& Pen);

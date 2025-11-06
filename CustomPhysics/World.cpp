@@ -25,6 +25,8 @@ void World::Init()
     map[ShapeType::AABB | ShapeType::AABB] = CheckAABBAABB;
 
     DepenMap[ShapeType::CIRCLE | ShapeType::CIRCLE] = DepenetrateCircleCircle;
+    DepenMap[ShapeType::CIRCLE | ShapeType::AABB] = DepenetrateCircleAABB;
+    DepenMap[ShapeType::AABB | ShapeType::AABB] = DepenetrateAABBAABB;
 
 
     const int screenWidth = 800;
@@ -36,10 +38,13 @@ void World::Init()
     std::shared_ptr<PhysObject> Object1 = std::make_shared<PhysObject>();
     std::shared_ptr<PhysObject> Object2 = std::make_shared<PhysObject>();
    
-    Object1->Collider.Type = ShapeType::CIRCLE;
-    Object1->Collider.CircleData.Radius = 6.0f;
+    Object1->Collider.Type = ShapeType::AABB;
+    Object1->Collider.AABBData.x = 0;
+    Object1->Collider.AABBData.y = 0;
+    Object1->Collider.AABBData.width = 10;
+    Object1->Collider.AABBData.height = 10;
     Object1->Position = { 10,10 };
-   Object1->AddForce({ 500,0 });
+    Object1->AddForce({ 500,0 });
 
     Object2->Collider.Type = ShapeType::AABB;
     Object2->Collider.AABBData.height = 10;
@@ -101,12 +106,12 @@ void World::FixedTick()
 
             if (collisionResult)
             {
-                std::cout << "Collision Works" << std::endl;
-               /* float Pen = 0.0f;
+               
+                float Pen = 0.0f;
                 glm::vec2 Normal = DepenMap[result](i->Position, i->Collider,
                     j->Position, j->Collider, Pen);
 
-                ResolvePhysObjects(*i,*j,1.0f,Normal,Pen);*/
+                ResolvePhysObjects(*i,*j,1.0f,Normal,Pen);
             }
         }
     }
