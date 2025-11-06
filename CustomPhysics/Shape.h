@@ -1,10 +1,10 @@
 #pragma once
 #include <cstdint>
 #include "glm/vec2.hpp"
-#include "glm/vec4.hpp"
 struct Circle
 {
 	float Radius;
+
 };
 
 struct AABB
@@ -13,6 +13,7 @@ struct AABB
 	float y;
 	float width;
 	float height;
+
 };
 
 enum class ShapeType : uint8_t
@@ -24,13 +25,15 @@ enum class ShapeType : uint8_t
 
 struct Shape
 {
-	ShapeType Type;
+	ShapeType Type = ShapeType::NONE;
 
 	union
 	{
 		Circle CircleData;
 		AABB   AABBData;
 	};
+
+
 };
 bool CheckCircleCircle(const glm::vec2& PosA, const Shape& ShapeA, const glm::vec2& PosB, const Shape& ShapeB);
 bool CheckAABBAABB(const glm::vec2& PosA, const Shape& ShapeA, const glm::vec2& PosB, const Shape& ShapeB);

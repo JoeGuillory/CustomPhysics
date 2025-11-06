@@ -2,6 +2,7 @@
 #include "raylib.h"
 PhysObject::PhysObject() : Position({0,0}), Velocity({0,0}), Acceleration({0,0}), Mass(1.0f), bUseGravity(true)
 {
+
 }
 
 void PhysObject::TickPhys(float Delta)
