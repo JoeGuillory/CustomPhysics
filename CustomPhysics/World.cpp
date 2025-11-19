@@ -37,6 +37,10 @@ void World::Init()
     
     std::shared_ptr<PhysObject> Object1 = std::make_shared<PhysObject>();
     std::shared_ptr<PhysObject> Object2 = std::make_shared<PhysObject>();
+    std::shared_ptr<PhysObject> Object3 = std::make_shared<PhysObject>();
+    std::shared_ptr<PhysObject> Object4 = std::make_shared<PhysObject>();
+    std::shared_ptr<PhysObject> Object5 = std::make_shared<PhysObject>();
+    std::shared_ptr<PhysObject> Object6 = std::make_shared<PhysObject>();
    
     Object1->Collider.Type = ShapeType::AABB;
     Object1->Collider.AABBData.x = 0;
@@ -53,10 +57,35 @@ void World::Init()
     Object2->Collider.AABBData.y = 0;
     Object2->Position = { 40,10 };
 
+    Object3->Collider.Type = ShapeType::CIRCLE;
+    Object3->Collider.CircleData.Radius = 10;
+    Object3->Position = { 10,50 };
+    Object3->AddForce({ 500,0 });
+
+    Object4->Collider.Type = ShapeType::CIRCLE;
+    Object4->Collider.CircleData.Radius = 10;
+    Object4->Position = { 40,50 };
+
+
+    Object5->Collider.Type = ShapeType::CIRCLE;
+    Object5->Collider.CircleData.Radius = 10;
+    Object5->Position = { 10,80 };
+    Object5->AddForce({ 500,0 });
+
+    Object6->Collider.Type = ShapeType::AABB;
+    Object6->Collider.AABBData.x = 0;
+    Object6->Collider.AABBData.y = 0;
+    Object6->Collider.AABBData.width = 10;
+    Object6->Collider.AABBData.height = 10;
+    Object6->Position = { 40,80 };
+    
     
     Instantiate(Object1);
     Instantiate(Object2);
- 
+    Instantiate(Object3);
+    Instantiate(Object4);
+    Instantiate(Object5);
+    Instantiate(Object6);
 
 
     SetTargetFPS(60);
